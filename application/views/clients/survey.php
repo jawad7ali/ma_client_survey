@@ -114,18 +114,18 @@
 </head>
 
 	<div class="container main-body">
-	<form id="email-survey-form" method="post" action="client/saveReviews">
+	<form id="email-survey-form" method="post" action="<?= base_url() ?>client/saveReviews">
 		<div class="main-section">
 		<div class="row">
 			<img src="<?= base_url('assets/img/'); ?>MA-logo.png" alt="" class="img">
 		</div>
-		<input type="hidden" name="selected_rate" value="<php echo $this->uri->segment('3'); ?>" >
-		<input type="hidden" name="user_id" value="<php echo $this->uri->segment('4'); ?>" >
-		<input type="hidden" name="review_id" value="<php echo $this->uri->segment('5'); ?>" >
-			
+		<input type="hidden" name="user_id" value="<?php echo $this->uri->segment('4'); ?>" >
+		<!-- <input type="hidden" name="review_id" value="<php echo $this->uri->segment('5'); ?>" > -->
+
 		<?php 
 			if($this->uri->segment('3') == 'Very%20satisfied' || $this->uri->segment('3') == 'Satisfied' || $this->uri->segment('3') == 'Neutral' ){
 		?>
+		<input type="hidden" name="interaction" value="<?= $this->uri->segment('3') ?>">
 		<input type="hidden" name="form_type" value="satisfaction">
 		<div class="row unsatisfactory">
 			<h3>Recruitment Satisfaction Survey</h3>
@@ -174,6 +174,7 @@
 		<?php 
 			}else{
 		?>
+		<input type="hidden" name="interaction" value="<?= $this->uri->segment('3') ?>">
 		<input type="hidden" name="form_type" value="unsatisfactory">
 			<div class="main-section">
 			<div class="row hiring-process">
@@ -181,7 +182,7 @@
 			</div>
 			<div class="row text-area">
 				<div>
-					<textarea name="description" id="" cols="30" rows="5" placeholder="Type your feedback here"></textarea>
+					<textarea name="unstatisfactory_feedback" id="" cols="30" rows="5" placeholder="Type your feedback here"></textarea>
 				</div>
 			</div>
 		</div>
@@ -200,8 +201,8 @@
 			<div class="col-md-9"></div>
 			<div class="col-md-3">
 				<div class="btns"> 
-					<input type="submit" value="Done" class="done" id='done-btn'>
-					<input type="button" value="Skip" class="skip" id="skip-btn">
+					<input type="submit" name="submit" value="Done" class="done" id='done-btn'>
+					<input type="submit" name="submit" value="Skip" class="skip" id="skip-btn">
 				</div>
 			</div>
 		</div>
@@ -212,96 +213,6 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="<?= base_url('assets/js/'); ?>jquery.barrating.min.js"></script>
 	<script src="<?= base_url('assets/js/'); ?>examples.js"></script>
-	<script>
-		var base_url = "<?= base_url(); ?>";
-
-		var userId = "<?= $userId ?>";
-		var ratingId = "<?= $ratingId ?>";
-		var candidate_name = "<?= $candidate_name ?>";
-
-		$('#firstRating').on('change', function (){
-			$('#skip-btn').prop('disabled', true).css({'opacity' : '0.6'})
-			$('#done-btn').prop('disabled', false).css({'opacity' : '1'});
-		})
-
-		$(function (){
-			$('#done-btn').prop('disabled', true).css({'opacity' : '0.6'});
-
-			$.ajax({
-				'url'    : base_url + 'check/user/' + userId,
-				'method' : 'POST',
-				success : function (res) {
-					
-					let data = JSON.parse(res)
-					
-					if ( data.status == 1 ) 
-					{
-						$('#done-btn').prop('disabled', true).css({'opacity' : '0.6'});
-						$('#skip-btn').prop('disabled', true).css({'opacity' : '0.6'})
-					}
-					else if ( data.status == 0) 
-					{
-						$('#skip-btn').prop('disabled', true).css({'opacity' : '0.6'})
-						$('#done-btn').prop('disabled', true).css({'opacity' : '0.6'});
-					}
-					// console.log(data.message)
-				}
-			});
-			$('#email-survey-form').on('submit', function (e){
-				e.preventDefault();
-				// console.log( $(this).serializeArray() );
-
-				$.ajax({
-					'url'    : base_url + 'save/email/review/' + ratingId + '/' + userId + '/' + candidate_name,
-					'method' : 'POST',
-					'data'	 : $(this).serializeArray(),
-					success  : function ( res ) {
-						let data = JSON.parse( res );
-						// console.log(data);
-						if ( data.status == 1 )
-						{
-							$('#done-btn').prop('disabled', true).css({'opacity' : '0.6'});
-						}
-						else
-						{
-							$('#done-btn').prop('disabled', false).css({'opacity' : '1'});
-						}
-
-						window.location = base_url + 'survey/end/' + userId;
-					}
-				});
-                
-			});
-
-			$('#skip-btn').on('click', function (e) {
-				e.preventDefault();
-				
-				$formData = $('#email-survey-form').serializeArray()
-				// console.log($('#email-survey-form').serializeArray());
-
-				$.ajax({
-					'url'    : base_url + 'skip/email/review/' + ratingId + '/' + userId + '/' + candidate_name,
-					'method' : 'POST',
-					'data'	 : $formData,
-					success  : function ( res ) 
-					{
-
-						let data = JSON.parse( res );
-						console.log(data);
-						if ( data.status == 0 )
-						{
-							$('#done-btn').prop('disabled', true).css({'opacity' : '0.6'});
-							$('#skip-btn').prop('disabled', true).css({'opacity' : '0.6'});
-						}
-						window.location = base_url + 'survey/end/' + userId;
-					}
-				});
-				
-			});
-		});
-		// $('#firstRating').on('change', function () {
-		// 	console.log( $(this).val() );
-		// });
-	</script>
+ 
 </body>
 </html>

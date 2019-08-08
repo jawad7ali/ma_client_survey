@@ -32,9 +32,9 @@ class Common_model extends CI_Model{
     public function get_data($table_name, $order_by = '', $col_for_order = '', $limit = '')
     { 
         $this->db->select('*');
-        if($col_for_order != ''){ $this->db->order_by($col_for_order,$order_by); }
+        if($col_for_order != ''){ $this->db->order_by($order_by,$col_for_order); }
         if($limit != ''){ $this->db->limit($limit); }
-
+        $this->db->group_by('u_id');
         $this->db->from($table_name);
          $query=$this->db->get();
 		$result = $query->result();
@@ -52,7 +52,7 @@ class Common_model extends CI_Model{
         }
     }
 
-    public function get_data_tbl_all($table_name, $col_name, $id, $order_by = '', $col_for_order = '', $paginationLimit = '', $start_index = '')
+    public function get_data_tbl_all($table_name, $col_name, $id, $col_for_order = '', $order_by = '', $paginationLimit = '', $start_index = '')
     { 
         $this->db->select('*');
         if($col_for_order != '')

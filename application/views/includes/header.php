@@ -82,6 +82,9 @@
 	    margin-bottom: 10px;
 	    margin-left: 20px;
 	}
+	.navbar {
+		margin-bottom: 0px;
+	}
 	</style>
 	
 </head>
@@ -100,7 +103,7 @@
           </div>
         </div>
       </nav>
-      
+
 	 <?php if($this->session->flashdata('success')): ?>
         <?php echo '<p class="alert alert-success">'.$this->session->flashdata('success').'</p>'; ?>
       <?php endif; ?>
@@ -108,3 +111,6 @@
       <?php if($this->session->flashdata('error')): ?>
         <?php echo '<p class="alert alert-danger">'.$this->session->flashdata('error').'</p>'; ?>
       <?php endif; ?>
+
+
+                

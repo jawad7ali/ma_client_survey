@@ -21,7 +21,7 @@ class Recruiter extends CI_Controller {
     	$email =$this->input->post('candidate_email');
         // check user for unsubscribed
         $unsubscribed =$this->common_model->get_data_row('submited_survey','email',$email);
-        print_r($unsubscribed);
+       // print_r($unsubscribed);
         if ($unsubscribed->unsubscribed !='1') 
         {
             
@@ -49,8 +49,7 @@ class Recruiter extends CI_Controller {
             $body_data = array(
                 'user_id'               =>  $emailAddressExistance,
                 'candidate_name'        =>  $firstName[0],
-                'candidate_email'       =>  $email,
-                'review_id' => $emailAddressExistance
+                'candidate_email'       =>  $email
             );
             
             $this->email->from('care@microagility.com', 'MicroAgility');
@@ -131,27 +130,27 @@ class Recruiter extends CI_Controller {
 
 			$output .= '<tr>
 			    <td style="background: #f7f7ff;border-top:2px solid #fff;line-height:3px;" height="10">
-			        <a style="text-align:center; font-weight:600;font-size: 16px; font-family: Arial, Helvetica, sans-serif;color:#666561;" href="' . base_url('survey/rating/').'Very satisfied/' . $bodyData['user_id'].'/'.$bodyData['review_id'].' " style="color:#666561;  font-weight:600;font-size:16px;text-decoration: none;font-family: Arial, Helvetica, sans-serif;"><p style="margin: 0;color:#666561; font-weight:600;text-align: center;font-family: Arial, Helvetica, sans-serif; font-size:16px;">Very satisfied</p></a>
+			        <a style="text-align:center; font-weight:600;font-size: 16px; font-family: Arial, Helvetica, sans-serif;color:#666561;" href="' . base_url('survey/rating/').'Very satisfied/' . $bodyData['user_id'].' " style="color:#666561;  font-weight:600;font-size:16px;text-decoration: none;font-family: Arial, Helvetica, sans-serif;"><p style="margin: 0;color:#666561; font-weight:600;text-align: center;font-family: Arial, Helvetica, sans-serif; font-size:16px;">Very satisfied</p></a>
 			    </td>
 			</tr>';
 			$output .= '<tr>
 			    <td style="background: #f7f7ff;border-top:2px solid #fff;line-height:3px;" height="10">
-			        <a style="text-align:center; font-weight:600;font-size: 16px; font-family: Arial, Helvetica, sans-serif;color:#666561;" href="' . base_url('survey/rating/').'Satisfied/' . $bodyData['user_id'].'/'.$bodyData['review_id'].' " style="color:#666561;  font-weight:600;font-size:16px;text-decoration: none;font-family: Arial, Helvetica, sans-serif;"><p style="margin: 0;color:#666561; font-weight:600;text-align: center;font-family: Arial, Helvetica, sans-serif; font-size:16px;">Satisfied</p></a>
+			        <a style="text-align:center; font-weight:600;font-size: 16px; font-family: Arial, Helvetica, sans-serif;color:#666561;" href="' . base_url('survey/rating/').'Satisfied/' . $bodyData['user_id'].' " style="color:#666561;  font-weight:600;font-size:16px;text-decoration: none;font-family: Arial, Helvetica, sans-serif;"><p style="margin: 0;color:#666561; font-weight:600;text-align: center;font-family: Arial, Helvetica, sans-serif; font-size:16px;">Satisfied</p></a>
 			    </td>
 			</tr>';
 			$output .= '<tr>
 			    <td style="background: #f7f7ff;border-top:2px solid #fff;line-height:3px;" height="10">
-			        <a style="text-align:center; font-weight:600;font-size: 16px; font-family: Arial, Helvetica, sans-serif;color:#666561;" href="' . base_url('survey/rating/').'Neutral/' . $bodyData['user_id'].'/'.$bodyData['review_id'].' " style="color:#666561;  font-weight:600;font-size:16px;text-decoration: none;font-family: Arial, Helvetica, sans-serif;"><p style="margin: 0;color:#666561; font-weight:600;text-align: center;font-family: Arial, Helvetica, sans-serif; font-size:16px;">Neutral</p></a>
+			        <a style="text-align:center; font-weight:600;font-size: 16px; font-family: Arial, Helvetica, sans-serif;color:#666561;" href="' . base_url('survey/rating/').'Neutral/' . $bodyData['user_id'].' " style="color:#666561;  font-weight:600;font-size:16px;text-decoration: none;font-family: Arial, Helvetica, sans-serif;"><p style="margin: 0;color:#666561; font-weight:600;text-align: center;font-family: Arial, Helvetica, sans-serif; font-size:16px;">Neutral</p></a>
 			    </td>
 			</tr>';
 			$output .= '<tr>
 			    <td style="background: #f7f7ff;border-top:2px solid #fff;line-height:3px;" height="10">
-			        <a style="text-align:center; font-weight:600;font-size: 16px; font-family: Arial, Helvetica, sans-serif;color:#666561;" href="' . base_url('survey/rating/').'Dissatisfied/' . $bodyData['user_id'].'/'.$bodyData['review_id'].' " style="color:#666561;  font-weight:600;font-size:16px;text-decoration: none;font-family: Arial, Helvetica, sans-serif;"><p style="margin: 0;color:#666561; font-weight:600;text-align: center;font-family: Arial, Helvetica, sans-serif; font-size:16px;">Dissatisfied</p></a>
+			        <a style="text-align:center; font-weight:600;font-size: 16px; font-family: Arial, Helvetica, sans-serif;color:#666561;" href="' . base_url('survey/rating/').'Dissatisfied/' . $bodyData['user_id'].' " style="color:#666561;  font-weight:600;font-size:16px;text-decoration: none;font-family: Arial, Helvetica, sans-serif;"><p style="margin: 0;color:#666561; font-weight:600;text-align: center;font-family: Arial, Helvetica, sans-serif; font-size:16px;">Dissatisfied</p></a>
 			    </td>
 			</tr>';
 			$output .= '<tr>
 			    <td style="background: #f7f7ff;border-top:2px solid #fff;line-height:3px;" height="10">
-			        <a style="text-align:center; font-weight:600;font-size: 16px; font-family: Arial, Helvetica, sans-serif;color:#666561;" href="' . base_url('survey/rating/').'Very dissatisfied/' . $bodyData['user_id'].'/'.$bodyData['review_id'].' " style="color:#666561;  font-weight:600;font-size:16px;text-decoration: none;font-family: Arial, Helvetica, sans-serif;"><p style="margin: 0;color:#666561; font-weight:600;text-align: center;font-family: Arial, Helvetica, sans-serif; font-size:16px;">Very dissatisfied</p></a>
+			        <a style="text-align:center; font-weight:600;font-size: 16px; font-family: Arial, Helvetica, sans-serif;color:#666561;" href="' . base_url('survey/rating/').'Very dissatisfied/' . $bodyData['user_id'].' " style="color:#666561;  font-weight:600;font-size:16px;text-decoration: none;font-family: Arial, Helvetica, sans-serif;"><p style="margin: 0;color:#666561; font-weight:600;text-align: center;font-family: Arial, Helvetica, sans-serif; font-size:16px;">Very dissatisfied</p></a>
 			    </td>
 			</tr>';
                                                     
